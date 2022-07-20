@@ -14,8 +14,8 @@ public class MyGdxGame extends ApplicationAdapter {
     Rectangle bruxa;
 //    OrthographicCamera camera;
 
-    int jumpSpeed = 300;
-    int fallingConstant = 450;
+    int jumpSpeed = 200;
+    int fallingConstant = 1000;
     int vertSpeed = 0;
 
 
@@ -38,12 +38,12 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void render() {
-        ScreenUtils.clear(0, 1, 0, 1);
+        ScreenUtils.clear(1, 1, 1, 1);
         batch.begin();
         batch.draw(img, bruxa.x, bruxa.y);
         batch.end();
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             vertSpeed = jumpSpeed;
 //            bruxa.y += 800 * Gdx.graphics.getDeltaTime();
         }
