@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class MyGdxGame extends ApplicationAdapter {
     SpriteBatch batch;
     Texture img;
-    Rectangle bucket;
+    Rectangle bruxa;
 //    OrthographicCamera camera;
 
     int jumpSpeed = 300;
@@ -22,41 +22,41 @@ public class MyGdxGame extends ApplicationAdapter {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        img = new Texture("bola.png");
+        img = new Texture("bruxa.png");
 
 //        camera = new OrthographicCamera();
 //        camera.setToOrtho(false, 600, 480);
 
-        bucket = new Rectangle();
+        bruxa = new Rectangle();
 
-        bucket.width = 167;
-        bucket.height = 166;
+        bruxa.width = 167;
+        bruxa.height = 166;
 
-        bucket.x = 300 - bucket.width / 2;
-        bucket.y = 300 - bucket.height / 2;
+        bruxa.x = 300 - bruxa.width / 2;
+        bruxa.y = 300 - bruxa.height / 2;
     }
 
     @Override
     public void render() {
         ScreenUtils.clear(0, 1, 0, 1);
         batch.begin();
-        batch.draw(img, bucket.x, bucket.y);
+        batch.draw(img, bruxa.x, bruxa.y);
         batch.end();
 
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
             vertSpeed = jumpSpeed;
-//            bucket.y += 800 * Gdx.graphics.getDeltaTime();
+//            bruxa.y += 800 * Gdx.graphics.getDeltaTime();
         }
-        bucket.y += vertSpeed * Gdx.graphics.getDeltaTime();
+        bruxa.y += vertSpeed * Gdx.graphics.getDeltaTime();
         vertSpeed -= fallingConstant * Gdx.graphics.getDeltaTime();
 
 //        else
-//        bucket.y -= 150 * Gdx.graphics.getDeltaTime();
+//        bruxa.y -= 150 * Gdx.graphics.getDeltaTime();
 
-        if (bucket.y < 0)
-            bucket.y = 0;
-//        if (bucket.y > 600 - bucket.height)
-//            bucket.y = 600 - bucket.height;
+        if (bruxa.y < 0)
+            bruxa.y = 0;
+//        if (bruxa.y > 600 - bruxa.height)
+//            bruxa.y = 600 - bruxa.height;
 
     }
 
