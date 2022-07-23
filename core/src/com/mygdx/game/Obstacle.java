@@ -32,7 +32,7 @@ public class Obstacle {
         return lowerPart;
     }
 
-    public void moveHorizontally(int distance) {
+    public void moveHorizontally(float distance) {
         this.upperPart.x += distance;
         this.lowerPart.x += distance;
     }
