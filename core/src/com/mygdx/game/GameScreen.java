@@ -5,17 +5,17 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
 
     private final FlappyWitch game;
+    public static final int SCREEN_HEIGHT = 600;
     Texture imgBruxa;
     Rectangle bruxa;
     Texture imgObstaculo;
-    Rectangle obstaculoCima, obstaculoBaixo, gap;
+    Obstacle obstacle;
     OrthographicCamera camera;
 
     int jumpSpeed = 200;
@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
     public GameScreen(FlappyWitch game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 600, 600);
+        camera.setToOrtho(false, 600, SCREEN_HEIGHT);
         imgBruxa = new Texture("bruxa.png");
         imgObstaculo = new Texture("obstaculo.jpg");
 
@@ -38,31 +38,7 @@ public class GameScreen implements Screen {
         // bruxa.x = 300 - bruxa.width / 2;
         bruxa.y = 300 - bruxa.height / 2;
 
-        obstaculoCima = new Rectangle();
-        obstaculoBaixo = new Rectangle();
-        gap = new Rectangle();
-
-        //gap.y = gerado aleatoriamente
-        //gap.height = tamanho do gap
-        //gap.width = mesma do obstaculo
-        //gap.x = mesma do obstaculo
-        //y eh onde comeca e onde acaba eh o y + heigth
-
-        gap.x = 400;
-        gap.y = 200;
-        gap.height = 200;
-        gap.width = 100;
-
-        obstaculoCima.width = 100;
-        obstaculoCima.height = 600;
-        obstaculoCima.x = 400;
-        obstaculoCima.y = gap.y + gap.height;
-
-        obstaculoBaixo.width = 100;
-        obstaculoBaixo.height = 600;
-        obstaculoBaixo.x = 400;
-        obstaculoBaixo.y = gap.y - 600;
-        //criar classe de obstaculo
+        obstacle = new Obstacle();
     }
 
     @Override
@@ -77,8 +53,8 @@ public class GameScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
         game.getBatch().begin();
         game.getBatch().draw(imgBruxa, bruxa.x, bruxa.y);
-        game.getBatch().draw(imgObstaculo, obstaculoCima.x, obstaculoCima.y);
-        game.getBatch().draw(imgObstaculo, obstaculoBaixo.x, obstaculoBaixo.y);
+        game.getBatch().draw(imgObstaculo, obstacle.getUpperPart().x, obstacle.getUpperPart().y, obstacle.getUpperPart().width, obstacle.getUpperPart().height);
+        game.getBatch().draw(imgObstaculo, obstacle.getLowerPart().x, obstacle.getLowerPart().y, obstacle.getLowerPart().width, obstacle.getLowerPart().height);
         game.getBatch().end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
@@ -96,10 +72,9 @@ public class GameScreen implements Screen {
 //        if (bruxa.y > 600 - bruxa.height)
 //            bruxa.y = 600 - bruxa.height;
 
-        obstaculoCima.x -= 1;
-        obstaculoBaixo.x -= 1;
+        obstacle.moveHorizontally(-2);
 
-        if ((bruxa.x + bruxa.width == obstaculoCima.x) && (bruxa.y <= gap.y || bruxa.y + bruxa.height >= obstaculoCima.y)) {
+        if (obstacle.collides(bruxa)) {
             //bruxa.y = 0
             System.out.println("COLIDIU");
             //game over
