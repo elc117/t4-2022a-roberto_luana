@@ -27,6 +27,8 @@ public class GameScreen implements Screen {
     private List<Obstacle> obstacles;
     private int counter;
 
+    int gameRunning;
+
     public GameScreen(FlappyWitch game) {
         this.game = game;
         this.counter = 0;
@@ -36,7 +38,7 @@ public class GameScreen implements Screen {
         camera.setToOrtho(false, 600, SCREEN_HEIGHT);
         imgBruxa = new Texture("bruxa.png");
         imgObstaculo = new Texture("obstaculo.jpg");
-
+        gameRunning = 1; //running
 
         bruxa = new Rectangle();
         bruxa.width = 100;
@@ -57,10 +59,46 @@ public class GameScreen implements Screen {
         camera.update();
 
         counter++;
-
         if (counter % 125 == 0)
             obstacles.add(new Obstacle());
+  /*
+        if(gameRunning == 1){
+            counter++;
+            if (counter % 125 == 0)
+                obstacles.add(new Obstacle());
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                vertSpeed = jumpSpeed;
+//            bruxa.y += 800 * Gdx.graphics.getDeltaTime();
+            }
+            bruxa.y += vertSpeed * Gdx.graphics.getDeltaTime();
+            vertSpeed -= fallingConstant * Gdx.graphics.getDeltaTime();
 
+//        else
+//        bruxa.y -= 150 * Gdx.graphics.getDeltaTime();
+
+            if (bruxa.y < 0)
+                bruxa.y = 0;
+            if (bruxa.y > 600 - bruxa.height)
+                bruxa.y = 600 - bruxa.height;
+            if(bruxa.y == 0){
+                gameRunning = 0;
+                game.setScreen(new GameOverScreen(game));
+            }
+
+            for (Obstacle o : obstacles) {
+                o.moveHorizontally(-150 * Gdx.graphics.getDeltaTime());
+                if (o.collides(bruxa)) {
+                    //bruxa.y = 0
+                    System.out.println("COLIDIU");
+                    gameRunning = 0;
+                    game.setScreen(new GameOverScreen(game));
+                    //game over
+                }
+            }
+            obstacles.removeIf(o -> o.getLowerPart().x + o.getLowerPart().width < 0);
+            System.out.println(obstacles.size());
+        }
+*/
         game.getBatch().setProjectionMatrix(camera.combined);
         game.getBatch().begin();
         game.getBatch().draw(imgBruxa, bruxa.x, bruxa.y);
@@ -84,17 +122,22 @@ public class GameScreen implements Screen {
             bruxa.y = 0;
         if (bruxa.y > 600 - bruxa.height)
             bruxa.y = 600 - bruxa.height;
+        if(bruxa.y == 0)
+            game.setScreen(new GameOverScreen(game));
 
         for (Obstacle o : obstacles) {
             o.moveHorizontally(-150 * Gdx.graphics.getDeltaTime());
             if (o.collides(bruxa)) {
                 //bruxa.y = 0
                 System.out.println("COLIDIU");
+                game.setScreen(new GameOverScreen(game));
                 //game over
             }
         }
         obstacles.removeIf(o -> o.getLowerPart().x + o.getLowerPart().width < 0);
         System.out.println(obstacles.size());
+
+
     }
 
     @Override
