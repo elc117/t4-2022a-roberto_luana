@@ -131,7 +131,7 @@ public class GameScreen implements Screen {
                 //bruxa.y = 0
                 System.out.println("COLIDIU");
                 game.setScreen(new GameOverScreen(game));
-                //game over
+                this.dispose();
             }
         }
         obstacles.removeIf(o -> o.getLowerPart().x + o.getLowerPart().width < 0);
@@ -160,9 +160,12 @@ public class GameScreen implements Screen {
 
     }
 
+    /**
+     * TODO: verificar o que mais deve ser disposed
+     */
     @Override
     public void dispose() {
-        game.getBatch().dispose();
+//        game.getBatch().dispose();
         imgBruxa.dispose();
     }
 }
