@@ -26,7 +26,7 @@ public class FlappyWitch extends Game {
         font.dispose();
     }
 
-    public SpriteBatch getBatch() {
+    public SpriteBatch  getBatch() {
         return batch;
     }
 
