@@ -40,4 +40,8 @@ public class Obstacle {
     public boolean collides(Rectangle comparedRectangle) {
         return this.lowerPart.overlaps(comparedRectangle) || this.upperPart.overlaps(comparedRectangle);
     }
+
+    public boolean outOfVisibleScreenRange() {
+        return this.lowerPart.x + this.lowerPart.width < 0;
+    }
 }
