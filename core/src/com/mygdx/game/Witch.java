@@ -8,9 +8,8 @@ public class Witch extends Rectangle {
 
     private static final float WITCH_WIDTH = 100f;
     private static final float WITCH_HEIGHT = 115f;
-
-    private static final float FALL_ACCELERATION_RATE = 1000;
-    private static final float JUMP_SPEED = 350;
+    private static final float WITCH_FALL_ACCELERATION_RATE = -1000;
+    private static final float WITCH_JUMP_SPEED = 350;
     private float vertSpeed;
 
     public Witch() {
@@ -24,7 +23,7 @@ public class Witch extends Rectangle {
 
     public void moveVertically(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) || Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-            vertSpeed = JUMP_SPEED;
+            vertSpeed = WITCH_JUMP_SPEED;
         }
         super.y += vertSpeed * delta;
 
@@ -33,7 +32,7 @@ public class Witch extends Rectangle {
     }
 
     private void updateVerticalSpeed(float delta) {
-        vertSpeed -= FALL_ACCELERATION_RATE * delta;
+        vertSpeed += WITCH_FALL_ACCELERATION_RATE * delta;
     }
 
     private void adjustCoordinatesToScreen() {

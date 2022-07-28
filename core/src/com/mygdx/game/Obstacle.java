@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.math.Rectangle;
+
+import java.security.PrivateKey;
 import java.util.Random;
 
 public class Obstacle {
@@ -9,6 +11,7 @@ public class Obstacle {
     private static final int OBSTACLE_INITIAL_X = 600;
     private static final int OBSTACLE_GAP_HEIGHT = 200;
     private static final int OBSTACLE_LOWER_PART_MAX_HEIGHT = GameScreen.SCREEN_HEIGHT - OBSTACLE_GAP_HEIGHT;
+private static final int OBSTACLE_HORIZONTAL_DISPLACEMENT = -150;
 
     private final Rectangle upperPart;
     private final Rectangle lowerPart;
@@ -32,9 +35,9 @@ public class Obstacle {
         return lowerPart;
     }
 
-    public void moveHorizontally(float distance) {
-        this.upperPart.x += distance;
-        this.lowerPart.x += distance;
+    public void moveHorizontally(float delta) {
+        this.upperPart.x += OBSTACLE_HORIZONTAL_DISPLACEMENT * delta;
+        this.lowerPart.x += OBSTACLE_HORIZONTAL_DISPLACEMENT * delta;
     }
 
     public boolean collides(Rectangle comparedRectangle) {

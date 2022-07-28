@@ -65,7 +65,7 @@ public class GameScreen implements Screen {
             game.setScreen(new GameOverScreen(game));
 
         for (Obstacle o : obstacles) {
-            o.moveHorizontally(-150 * delta);
+            o.moveHorizontally(delta);
             if (o.collides(bruxa))
                 game.setScreen(new GameOverScreen(game));
         }
