@@ -10,31 +10,30 @@ import java.util.List;
 
 public class GameScreen implements Screen {
 
-    private final FlappyWitch game;
     public static final int SCREEN_HEIGHT = 600;
-    Texture imgBruxa;
-    Witch bruxa;
-    Texture imgObstaculo;
-    OrthographicCamera camera;
 
+    private final FlappyWitch game;
+    private final Texture imgBruxa;
+    private final Witch bruxa;
+    private final Texture imgObstaculo;
+    private final OrthographicCamera camera;
+    private final List<Obstacle> obstacles;
 
-    private List<Obstacle> obstacles;
     private int counter;
 
-    int gameRunning;
 
     public GameScreen(FlappyWitch game) {
         this.game = game;
         this.counter = 0;
-        obstacles = new ArrayList<>();
-        obstacles.add(new Obstacle());
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 600, SCREEN_HEIGHT);
-        imgBruxa = new Texture("bruxa.png");
-        imgObstaculo = new Texture("obstaculo.jpg");
-        gameRunning = 1; //running
+        this.obstacles = new ArrayList<>();
 
-        bruxa = new Witch();
+        this.camera = new OrthographicCamera();
+        this.camera.setToOrtho(false, 600, SCREEN_HEIGHT);
+
+        this.imgBruxa = new Texture("bruxa.png");
+        this.imgObstaculo = new Texture("obstaculo.jpg");
+
+        this.bruxa = new Witch();
     }
 
     @Override
