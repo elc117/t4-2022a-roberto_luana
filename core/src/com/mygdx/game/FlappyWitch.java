@@ -8,6 +8,7 @@ public class FlappyWitch extends Game {
 
     private SpriteBatch batch;
     private BitmapFont font;
+    private int bestScore;
 
     @Override
     public void create() {
@@ -26,11 +27,21 @@ public class FlappyWitch extends Game {
         font.dispose();
     }
 
-    public SpriteBatch  getBatch() {
+    public SpriteBatch getBatch() {
         return batch;
     }
 
     public BitmapFont getFont() {
         return font;
+    }
+
+    public int getBestScore() {
+        return bestScore;
+    }
+
+    public void updateBestScore(int newScore) {
+        if (newScore > bestScore) {
+            bestScore = newScore;
+        }
     }
 }

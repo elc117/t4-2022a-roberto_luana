@@ -20,11 +20,15 @@ public class GameScreen implements Screen {
     private final List<Obstacle> obstacles;
 
     private int counter;
+    private int score;
 
 
     public GameScreen(FlappyWitch game) {
         this.game = game;
+
         this.counter = 0;
+        this.score = 0;
+
         this.obstacles = new ArrayList<>();
 
         this.camera = new OrthographicCamera();
@@ -62,14 +66,21 @@ public class GameScreen implements Screen {
         bruxa.moveVertically(delta);
 
         if (bruxa.y == 0)
-            game.setScreen(new GameOverScreen(game));
+            finishGame();
 
-        for (Obstacle o : obstacles) {
+        obstacles.forEach(o -> {
             o.moveHorizontally(delta);
+            if (o.outOfVisibleScreenRange())
+                score++;
             if (o.collides(bruxa))
-                game.setScreen(new GameOverScreen(game));
-        }
+                finishGame();
+        });
         obstacles.removeIf(Obstacle::outOfVisibleScreenRange);
+    }
+
+    private void finishGame() {
+        game.updateBestScore(score);
+        game.setScreen(new GameOverScreen(game, score));
     }
 
     @Override

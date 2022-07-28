@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Witch extends Rectangle {
 
     private static final float WITCH_WIDTH = 100f;
-    private static final float WITCH_HEIGHT = 115f;
+    private static final float WITCH_HEIGHT = 100f;
     private static final float WITCH_FALL_ACCELERATION_RATE = -1000;
     private static final float WITCH_JUMP_SPEED = 350;
     private float vertSpeed;
