@@ -4,6 +4,8 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.security.PrivateKey;
 import java.util.Random;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 public class Obstacle {
 
@@ -17,7 +19,7 @@ private static final int OBSTACLE_HORIZONTAL_DISPLACEMENT = -150;
     private final Rectangle lowerPart;
 
     public Obstacle() {
-        int obstacleLowerPartHeight = new Random().ints(0, OBSTACLE_LOWER_PART_MAX_HEIGHT).findFirst().getAsInt();
+        int obstacleLowerPartHeight = new Random().nextInt(OBSTACLE_LOWER_PART_MAX_HEIGHT);
         int obstacleLowerPartY = 0;
 
         int obstacleUpperPartHeight = GameScreen.SCREEN_HEIGHT - OBSTACLE_GAP_HEIGHT - obstacleLowerPartHeight;
