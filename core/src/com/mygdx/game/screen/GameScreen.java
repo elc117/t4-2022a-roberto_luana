@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.FlappyWitch;
+import com.mygdx.game.element.Obstacle;
+import com.mygdx.game.element.Witch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,12 +84,14 @@ public class GameScreen implements Screen {
 
         obstacles.forEach(o -> {
             o.moveHorizontally(delta);
-            if (o.outOfVisibleScreenRange())
+            if (!o.getScored() && o.isOnLeftOf(bruxa)) {
+                o.setScored(true);
                 score++;
+            }
             if (o.collides(bruxa))
                 finishGame();
         });
-        obstacles.removeIf(Obstacle::outOfVisibleScreenRange);
+        obstacles.removeIf(Obstacle::isOutOfVisibleScreenRange);
     }
 
     private void finishGame() {

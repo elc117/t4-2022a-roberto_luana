@@ -1,8 +1,9 @@
-package com.mygdx.game;
+package com.mygdx.game.element;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.screen.GameScreen;
 
 public class Witch extends Rectangle {
 
@@ -15,7 +16,7 @@ public class Witch extends Rectangle {
     public Witch() {
         super.width = WITCH_WIDTH;
         super.height = WITCH_HEIGHT;
-        super.x = 0f;
+        super.x = GameScreen.SCREEN_WIDTH / 2f - WITCH_WIDTH / 2f;
         super.y = GameScreen.SCREEN_HEIGHT / 2f - WITCH_HEIGHT / 2f;
 
         this.vertSpeed = 0f;

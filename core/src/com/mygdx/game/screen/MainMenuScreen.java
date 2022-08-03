@@ -1,9 +1,11 @@
-package com.mygdx.game;
+package com.mygdx.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.mygdx.game.FlappyWitch;
+import com.mygdx.game.screen.GameScreen;
 
 public class MainMenuScreen implements Screen {
     private static final int WIDTH = 600;
