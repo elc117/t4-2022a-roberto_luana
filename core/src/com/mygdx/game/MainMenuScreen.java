@@ -16,6 +16,7 @@ public class MainMenuScreen implements Screen {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, WIDTH, HEIGHT);
+        //game.getFont().getData().setScale(1,1);
     }
 
     @Override

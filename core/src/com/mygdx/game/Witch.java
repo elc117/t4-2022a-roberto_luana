@@ -2,7 +2,12 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 public class Witch extends Rectangle {
 
@@ -12,6 +17,11 @@ public class Witch extends Rectangle {
     private static final float WITCH_JUMP_SPEED = 350;
     private float vertSpeed;
 
+    public Texture witchSprite;
+    private Animation<TextureRegion> witchAnimation;
+    private float stateTimer;
+
+
     public Witch() {
         super.width = WITCH_WIDTH;
         super.height = WITCH_HEIGHT;
@@ -19,6 +29,15 @@ public class Witch extends Rectangle {
         super.y = GameScreen.SCREEN_HEIGHT / 2f - WITCH_HEIGHT / 2f;
 
         this.vertSpeed = 0f;
+
+        stateTimer =0;
+        witchSprite = new Texture(Gdx.files.internal("witch_animation.png"));
+        Array<TextureRegion> frames = new Array<>();
+        for(int i=0;i<3;i++){
+            frames.add(new TextureRegion(witchSprite,i*58,0,58,46));
+        }
+        witchAnimation = new Animation<>(0.2f,frames);
+
     }
 
     public void moveVertically(float delta) {
@@ -40,6 +59,14 @@ public class Witch extends Rectangle {
             super.y = 0;
         if (super.y > GameScreen.SCREEN_HEIGHT - super.height)
             super.y = GameScreen.SCREEN_HEIGHT - super.height;
+    }
+
+    public TextureRegion getFrame(float delta){
+        TextureRegion region;
+        region = witchAnimation.getKeyFrame(stateTimer,true);
+        stateTimer = stateTimer + delta;
+        return region;
+
     }
 
 }
