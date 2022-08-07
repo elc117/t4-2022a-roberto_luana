@@ -22,7 +22,6 @@ public class GameScreen implements Screen {
 
     private final FlappyWitch game;
     private final Witch bruxa;
-    private final Texture imgBruxa;
     private final Texture imgObstaculo;
     private final Texture imgFundo;
     private final OrthographicCamera camera;
@@ -44,7 +43,6 @@ public class GameScreen implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 600, SCREEN_HEIGHT);
 
-        this.imgBruxa = new Texture("bruxa.png");
         this.imgObstaculo = new Texture("obstaculo.jpg");
         this.imgFundo = new Texture("dark_background.png");
 
@@ -59,7 +57,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(1, 1, 1, 1);
         camera.update();
 
         Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
@@ -148,7 +145,6 @@ public class GameScreen implements Screen {
      */
     @Override
     public void dispose() {
-        imgBruxa.dispose();
         imgObstaculo.dispose();
     }
 }
