@@ -26,6 +26,7 @@ public class GameOverScreen implements Screen {
         this.game = game;
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, WIDTH, HEIGHT);
+        this.score = score;
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
@@ -54,7 +55,8 @@ public class GameOverScreen implements Screen {
             }
         });
         stage.addActor(leaderBoardButton);
-        this.score = score;
+        game.getFont().getData().setScale(1,1);
+
     }
 
     @Override

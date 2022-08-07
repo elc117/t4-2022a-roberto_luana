@@ -49,6 +49,7 @@ public class GameScreen implements Screen {
         this.imgFundo = new Texture("dark_background.png");
 
         this.bruxa = new Witch();
+        game.getFont().getData().setScale(3, 3);
     }
 
     @Override
@@ -70,11 +71,12 @@ public class GameScreen implements Screen {
         game.getBatch().setProjectionMatrix(camera.combined);
         game.getBatch().begin();
         game.getBatch().draw(imgFundo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-        game.getBatch().draw(imgBruxa, bruxa.x, bruxa.y, bruxa.width, bruxa.height);
         obstacles.forEach(o -> {
             game.getBatch().draw(imgObstaculo, o.getUpperPart().x, o.getUpperPart().y, o.getUpperPart().width, o.getUpperPart().height);
             game.getBatch().draw(imgObstaculo, o.getLowerPart().x, o.getLowerPart().y, o.getLowerPart().width, o.getLowerPart().height);
         });
+        game.getFont().draw(game.getBatch(), String.valueOf(score), 300, 550);
+        game.getBatch().draw(bruxa.getFrame(delta), bruxa.x, bruxa.y, bruxa.width, bruxa.height);
         game.getBatch().end();
 
         bruxa.moveVertically(delta);
