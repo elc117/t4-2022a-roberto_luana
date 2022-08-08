@@ -20,7 +20,8 @@ public class GameScreen implements Screen {
     private final FlappyWitch game;
     private final Witch bruxa;
     private final Texture imgBruxa;
-    private final Texture imgObstaculo;
+    private final Texture imgObstaculoCima;
+    private final Texture imgObstaculoBaixo;
     private final Texture imgFundo;
     private final OrthographicCamera camera;
     private final List<Obstacle> obstacles;
@@ -42,7 +43,8 @@ public class GameScreen implements Screen {
         this.camera.setToOrtho(false, 600, SCREEN_HEIGHT);
 
         this.imgBruxa = new Texture("bruxa.png");
-        this.imgObstaculo = new Texture("obstaculo.jpg");
+        this.imgObstaculoCima = new Texture("brick.png");
+        this.imgObstaculoBaixo = new Texture("torch.png");
         this.imgFundo = new Texture("dark_background.png");
 
         this.bruxa = new Witch();
@@ -70,8 +72,8 @@ public class GameScreen implements Screen {
         game.getBatch().draw(imgFundo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         //game.getBatch().draw(imgBruxa, bruxa.x, bruxa.y, bruxa.width, bruxa.height);
         obstacles.forEach(o -> {
-            game.getBatch().draw(imgObstaculo, o.getUpperPart().x, o.getUpperPart().y, o.getUpperPart().width, o.getUpperPart().height);
-            game.getBatch().draw(imgObstaculo, o.getLowerPart().x, o.getLowerPart().y, o.getLowerPart().width, o.getLowerPart().height);
+            game.getBatch().draw(imgObstaculoCima, o.getUpperPart().x, o.getUpperPart().y, o.getUpperPart().width, o.getUpperPart().height);
+            game.getBatch().draw(imgObstaculoBaixo, o.getLowerPart().x, o.getLowerPart().y, o.getLowerPart().width, o.getLowerPart().height);
         });
         game.getFont().draw(game.getBatch(), String.valueOf(score), 300, 550);
 
@@ -147,6 +149,7 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         imgBruxa.dispose();
-        imgObstaculo.dispose();
+        imgObstaculoBaixo.dispose();
+        imgObstaculoCima.dispose();
     }
 }
