@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.FlappyWitch;
 import com.mygdx.game.element.Obstacle;
 import com.mygdx.game.element.Witch;
@@ -22,7 +21,8 @@ public class GameScreen implements Screen {
 
     private final FlappyWitch game;
     private final Witch bruxa;
-    private final Texture imgObstaculo;
+    private final Texture imgObstaculoCima;
+    private final Texture imgObstaculoBaixo;
     private final Texture imgFundo;
     private final OrthographicCamera camera;
     private final List<Obstacle> obstacles;
@@ -43,7 +43,8 @@ public class GameScreen implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 600, SCREEN_HEIGHT);
 
-        this.imgObstaculo = new Texture("obstaculo.jpg");
+        this.imgObstaculoCima = new Texture("brick.png");
+        this.imgObstaculoBaixo = new Texture("torch.png");
         this.imgFundo = new Texture("dark_background.png");
 
         this.bruxa = new Witch();
@@ -69,8 +70,8 @@ public class GameScreen implements Screen {
         game.getBatch().begin();
         game.getBatch().draw(imgFundo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
         obstacles.forEach(o -> {
-            game.getBatch().draw(imgObstaculo, o.getUpperPart().x, o.getUpperPart().y, o.getUpperPart().width, o.getUpperPart().height);
-            game.getBatch().draw(imgObstaculo, o.getLowerPart().x, o.getLowerPart().y, o.getLowerPart().width, o.getLowerPart().height);
+            game.getBatch().draw(imgObstaculoCima, o.getUpperPart().x, o.getUpperPart().y, o.getUpperPart().width, o.getUpperPart().height);
+            game.getBatch().draw(imgObstaculoBaixo, o.getLowerPart().x, o.getLowerPart().y, o.getLowerPart().width, o.getLowerPart().height);
         });
         game.getFont().draw(game.getBatch(), String.valueOf(score), 300, 550);
         game.getBatch().draw(bruxa.getFrame(delta), bruxa.x, bruxa.y, bruxa.width, bruxa.height);
@@ -145,6 +146,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void dispose() {
-        imgObstaculo.dispose();
+        imgObstaculoBaixo.dispose();
+        imgObstaculoCima.dispose();
     }
 }
