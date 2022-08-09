@@ -9,12 +9,16 @@ public class FlappyWitch extends Game {
 
     private SpriteBatch batch;
     private BitmapFont font;
+
     private int bestScore;
 
     @Override
     public void create() {
-        batch = new SpriteBatch();
-        font = new BitmapFont();
+        this.batch = new SpriteBatch();
+        this.font = new BitmapFont();
+
+        this.bestScore = 0;
+
         this.setScreen(new MainMenuScreen(this));
     }
 
@@ -23,6 +27,7 @@ public class FlappyWitch extends Game {
         super.render();
     }
 
+    @Override
     public void dispose() {
         batch.dispose();
         font.dispose();

@@ -13,50 +13,51 @@ import com.mygdx.game.FlappyWitch;
 
 
 public class GameOverScreen implements Screen {
-    private final FlappyWitch game;
-    OrthographicCamera camera;
-    Stage stage;
-    TextButton restartButton;
-    TextButton leaderBoardButton;
     private static final int WIDTH = 600;
     private static final int HEIGHT = 600;
-    private int score;
+    private final FlappyWitch game;
+    private final OrthographicCamera camera;
+    private final Stage stage;
+    private final int score;
+    private final Skin skin;
 
     public GameOverScreen(final FlappyWitch game, final int score) {
         this.game = game;
+        this.score = score;
+
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, WIDTH, HEIGHT);
-        this.score = score;
+
         this.stage = new Stage();
+        this.skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
+
         Gdx.input.setInputProcessor(stage);
-        Skin mySkin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        restartButton = new TextButton("RESTART", mySkin, "small");
+
+        TextButton restartButton = new TextButton("RESTART", skin, "small");
         restartButton.setSize(300, 50);
         restartButton.setPosition(175, 200);
         restartButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("Button Pressed");
+                System.out.println("RESTART");
                 game.setScreen(new GameScreen(game));
-                dispose();
             }
         });
         stage.addActor(restartButton);
 
-        leaderBoardButton = new TextButton("ADD TO LEADERBOARD", mySkin, "small");
+        TextButton leaderBoardButton = new TextButton("ADD TO LEADERBOARD", skin, "small");
         leaderBoardButton.setSize(300, 50);
         leaderBoardButton.setPosition(175, 100);
         leaderBoardButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                System.out.println("LEADER BOARD");
-                //game.setScreen(new GameScreen(game));
-                dispose();
+                System.out.println("LEADERBOARD");
+//                game.setScreen(new GameScreen(game));
             }
         });
         stage.addActor(leaderBoardButton);
-        game.getFont().getData().setScale(1,1);
 
+        game.getFont().getData().setScale(1, 1);
     }
 
     @Override
@@ -106,7 +107,8 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        skin.dispose();
     }
 
 

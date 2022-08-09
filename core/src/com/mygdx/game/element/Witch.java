@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.screen.GameScreen;
 
-public class Witch extends Rectangle {
+import java.util.Arrays;
+
+public class Witch extends Rectangle implements Disposable {
 
     private static final int WITCH_WIDTH = 98;
     private static final int WITCH_HEIGHT = 78;
@@ -36,7 +38,7 @@ public class Witch extends Rectangle {
 
         this.stateTimer = 0f;
         Texture sprite = new Texture(Gdx.files.internal(WITCH_ANIMATION_FILE));
-        Array<TextureRegion> frames = new Array<>();
+        Array<TextureRegion> frames = new Array<TextureRegion>(TextureRegion.class);
         for (int i = 0; i < 3; i++) {
             frames.add(new TextureRegion(sprite, i * WITCH_ACTUAL_WIDTH, 0, WITCH_ACTUAL_WIDTH, WITCH_ACTUAL_HEIGHT));
         }
@@ -71,4 +73,12 @@ public class Witch extends Rectangle {
         return region;
     }
 
+    public Animation<TextureRegion> getAnimation() {
+        return animation;
+    }
+
+    @Override
+    public void dispose() {
+        Arrays.stream(this.animation.getKeyFrames()).map(TextureRegion::getTexture).forEach(Texture::dispose);
+    }
 }
