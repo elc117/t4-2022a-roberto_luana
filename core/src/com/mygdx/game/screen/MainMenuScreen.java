@@ -18,7 +18,7 @@ public class MainMenuScreen implements Screen {
     public MainMenuScreen(final FlappyWitch game) {
         this.game = game;
 
-        this.imgFundo = new Texture("initial_background.png");
+        this.imgFundo = new Texture("initial_background.jpeg");
 
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
