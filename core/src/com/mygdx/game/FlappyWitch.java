@@ -14,7 +14,6 @@ public class FlappyWitch extends Game {
     private BitmapFont font;
     private OrthographicCamera camera;
 
-
     private int bestScore;
 
     @Override
