@@ -4,31 +4,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.FlappyWitch;
 
 
 public class GameOverScreen implements Screen {
-    private static final int SCREEN_WIDTH = 600;
-    private static final int SCREEN_HEIGHT = 600;
     private final FlappyWitch game;
-    private final OrthographicCamera camera;
     private final Texture imgFundo;
     private final Stage stage;
     private final int score;
     private final Skin skin;
+    private Rectangle viewport;
+
 
     public GameOverScreen(final FlappyWitch game, final int score) {
         this.game = game;
         this.score = score;
 
         this.stage = new Stage();
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
         this.imgFundo = new Texture("game_over_background.jpeg");
         this.skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
 
@@ -68,12 +68,14 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.update();
-        game.getBatch().setProjectionMatrix(camera.combined);
+        ScreenUtils.clear(1, 1, 1, 1);
+        game.getCamera().update();
+
+        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
 
         //TODO: make coordinates dynamic for resizing. Perhaps using a table would be helpful.
         game.getBatch().begin();
-        game.getBatch().draw(imgFundo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        game.getBatch().draw(imgFundo, 0, 0, FlappyWitch.SCREEN_WIDTH, FlappyWitch.SCREEN_HEIGHT);
         game.getFont().draw(game.getBatch(), "SCORE", 215, 400);
         game.getFont().draw(game.getBatch(), String.valueOf(score), 230, 380);
         game.getFont().draw(game.getBatch(), "BEST SCORE", 220, 350);
@@ -87,7 +89,22 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        float aspectRatio = (float) width / (float) height;
+        float scale = 1f;
+        Vector2 crop = new Vector2(0f, 0f);
 
+        if (aspectRatio > FlappyWitch.ASPECT_RATIO) {
+            scale = (float) height / (float) FlappyWitch.SCREEN_HEIGHT;
+            crop.x = (width - FlappyWitch.SCREEN_WIDTH * scale) / 2f;
+        } else if (aspectRatio < FlappyWitch.ASPECT_RATIO) {
+            scale = (float) width / (float) FlappyWitch.SCREEN_WIDTH;
+            crop.y = (height - FlappyWitch.SCREEN_HEIGHT * scale) / 2f;
+        } else
+            scale = (float) width / (float) FlappyWitch.SCREEN_WIDTH;
+
+        float w = (float) FlappyWitch.SCREEN_WIDTH * scale;
+        float h = (float) FlappyWitch.SCREEN_HEIGHT * scale;
+        viewport = new Rectangle(crop.x, crop.y, w, h);
     }
 
     @Override

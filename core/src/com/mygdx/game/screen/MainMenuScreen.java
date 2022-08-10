@@ -5,32 +5,31 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.FlappyWitch;
 
 public class MainMenuScreen implements Screen {
-    private static final int SCREEN_HEIGHT = 600;
-    private static final int SCREEN_WIDTH = 600;
-
     private final FlappyWitch game;
-    private final OrthographicCamera camera;
     private final Texture imgFundo;
+    private Rectangle viewport;
 
     public MainMenuScreen(final FlappyWitch game) {
         this.game = game;
 
         this.imgFundo = new Texture("initial_background.jpeg");
-
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 
     @Override
     public void render(float delta) {
-        camera.update();
+        ScreenUtils.clear(1, 1, 1, 1);
+        game.getCamera().update();
 
-        game.getBatch().setProjectionMatrix(camera.combined);
+        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+
         game.getBatch().begin();
-        game.getBatch().draw(imgFundo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        game.getBatch().draw(imgFundo, 0, 0, FlappyWitch.SCREEN_WIDTH, FlappyWitch.SCREEN_HEIGHT);
         game.getFont().draw(game.getBatch(), "Use espaço ou o botão esquerdo do mouse para começar", 100, 100);
         game.getBatch().end();
 
@@ -42,6 +41,22 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        float aspectRatio = (float) width / (float) height;
+        float scale = 1f;
+        Vector2 crop = new Vector2(0f, 0f);
+
+        if (aspectRatio > FlappyWitch.ASPECT_RATIO) {
+            scale = (float) height / (float) FlappyWitch.SCREEN_HEIGHT;
+            crop.x = (width - FlappyWitch.SCREEN_WIDTH * scale) / 2f;
+        } else if (aspectRatio < FlappyWitch.ASPECT_RATIO) {
+            scale = (float) width / (float) FlappyWitch.SCREEN_WIDTH;
+            crop.y = (height - FlappyWitch.SCREEN_HEIGHT * scale) / 2f;
+        } else
+            scale = (float) width / (float) FlappyWitch.SCREEN_WIDTH;
+
+        float w = (float) FlappyWitch.SCREEN_WIDTH * scale;
+        float h = (float) FlappyWitch.SCREEN_HEIGHT * scale;
+        viewport = new Rectangle(crop.x, crop.y, w, h);
     }
 
     @Override

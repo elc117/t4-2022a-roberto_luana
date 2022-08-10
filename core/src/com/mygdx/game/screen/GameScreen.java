@@ -4,29 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.FlappyWitch;
 import com.mygdx.game.element.Obstacle;
 import com.mygdx.game.element.Witch;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameScreen implements Screen {
-
-    public static final int SCREEN_HEIGHT = 600;
-    public static final int SCREEN_WIDTH = 600;
-    public static final float ASPECT_RATIO = (float) SCREEN_WIDTH / (float) SCREEN_HEIGHT;
-
     private final FlappyWitch game;
     private final Witch bruxa;
     private final Texture imgObstaculoCima;
     private final Texture imgObstaculoBaixo;
     private final Texture imgFundo;
-    private final OrthographicCamera camera;
     private final List<Obstacle> obstacles;
 
     private int counter;
@@ -41,9 +34,6 @@ public class GameScreen implements Screen {
         this.score = 0;
 
         this.obstacles = new ArrayList<>();
-
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, 600, SCREEN_HEIGHT);
 
         this.imgObstaculoCima = new Texture("brick.png");
         this.imgObstaculoBaixo = new Texture("torch.png");
@@ -60,7 +50,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.update();
+        ScreenUtils.clear(1, 1, 1, 1);
+        game.getCamera().update();
 
         Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
 
@@ -68,9 +59,8 @@ public class GameScreen implements Screen {
         if (counter % 125 == 0)
             obstacles.add(new Obstacle());
 
-        game.getBatch().setProjectionMatrix(camera.combined);
         game.getBatch().begin();
-        game.getBatch().draw(imgFundo, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        game.getBatch().draw(imgFundo, 0, 0, FlappyWitch.SCREEN_WIDTH, FlappyWitch.SCREEN_HEIGHT);
         obstacles.forEach(o -> {
             game.getBatch().draw(imgObstaculoCima, o.getUpperPart().x, o.getUpperPart().y, o.getUpperPart().width, o.getUpperPart().height);
             game.getBatch().draw(imgObstaculoBaixo, o.getLowerPart().x, o.getLowerPart().y, o.getLowerPart().width, o.getLowerPart().height);
@@ -114,17 +104,17 @@ public class GameScreen implements Screen {
         float scale = 1f;
         Vector2 crop = new Vector2(0f, 0f);
 
-        if (aspectRatio > ASPECT_RATIO) {
-            scale = (float) height / (float) SCREEN_HEIGHT;
-            crop.x = (width - SCREEN_WIDTH * scale) / 2f;
-        } else if (aspectRatio < ASPECT_RATIO) {
-            scale = (float) width / (float) SCREEN_WIDTH;
-            crop.y = (height - SCREEN_HEIGHT * scale) / 2f;
+        if (aspectRatio > FlappyWitch.ASPECT_RATIO) {
+            scale = (float) height / (float) FlappyWitch.SCREEN_HEIGHT;
+            crop.x = (width - FlappyWitch.SCREEN_WIDTH * scale) / 2f;
+        } else if (aspectRatio < FlappyWitch.ASPECT_RATIO) {
+            scale = (float) width / (float) FlappyWitch.SCREEN_WIDTH;
+            crop.y = (height - FlappyWitch.SCREEN_HEIGHT * scale) / 2f;
         } else
-            scale = (float) width / (float) SCREEN_WIDTH;
+            scale = (float) width / (float) FlappyWitch.SCREEN_WIDTH;
 
-        float w = (float) SCREEN_WIDTH * scale;
-        float h = (float) SCREEN_HEIGHT * scale;
+        float w = (float) FlappyWitch.SCREEN_WIDTH * scale;
+        float h = (float) FlappyWitch.SCREEN_HEIGHT * scale;
         viewport = new Rectangle(crop.x, crop.y, w, h);
     }
 

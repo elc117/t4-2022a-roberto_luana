@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
+import com.mygdx.game.FlappyWitch;
 import com.mygdx.game.screen.GameScreen;
 
 import java.util.Arrays;
@@ -31,8 +32,8 @@ public class Witch extends Rectangle implements Disposable {
     public Witch() {
         super.width = WITCH_WIDTH;
         super.height = WITCH_HEIGHT;
-        super.x = GameScreen.SCREEN_WIDTH / 2f - WITCH_WIDTH / 2f;
-        super.y = GameScreen.SCREEN_HEIGHT / 2f - WITCH_HEIGHT / 2f;
+        super.x = FlappyWitch.SCREEN_WIDTH / 2f - WITCH_WIDTH / 2f;
+        super.y = FlappyWitch.SCREEN_HEIGHT / 2f - WITCH_HEIGHT / 2f;
 
         this.vertSpeed = 0f;
 
@@ -62,8 +63,8 @@ public class Witch extends Rectangle implements Disposable {
     private void adjustCoordinatesToScreen() {
         if (super.y < 0)
             super.y = 0;
-        if (super.y > GameScreen.SCREEN_HEIGHT - super.height)
-            super.y = GameScreen.SCREEN_HEIGHT - super.height;
+        if (super.y > FlappyWitch.SCREEN_HEIGHT - super.height)
+            super.y = FlappyWitch.SCREEN_HEIGHT - super.height;
     }
 
     public TextureRegion getFrame(float delta) {
