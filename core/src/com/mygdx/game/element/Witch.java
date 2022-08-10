@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.FlappyWitch;
-import com.mygdx.game.screen.GameScreen;
 
 import java.util.Arrays;
 
@@ -72,10 +71,6 @@ public class Witch extends Rectangle implements Disposable {
         region = animation.getKeyFrame(stateTimer, true);
         stateTimer = stateTimer + delta;
         return region;
-    }
-
-    public Animation<TextureRegion> getAnimation() {
-        return animation;
     }
 
     @Override

@@ -12,6 +12,8 @@ import com.mygdx.game.FlappyWitch;
 
 
 public class GameOverScreen extends FlappyWitchScreen {
+    private static final float BUTTON_WIDTH = 300;
+    private static final float BUTTON_HEIGHT = 50;
     private final Stage stage;
     private final int score;
     private final Skin skin;
@@ -28,8 +30,8 @@ public class GameOverScreen extends FlappyWitchScreen {
         Gdx.input.setInputProcessor(stage);
 
         TextButton restartButton = new TextButton("RESTART", skin, "small");
-        restartButton.setSize(300, 50);
-        restartButton.setPosition(175, 200);
+        restartButton.setSize(BUTTON_WIDTH, BUTTON_HEIGHT);
+        restartButton.setPosition(FlappyWitch.SCREEN_WIDTH / 2f - BUTTON_WIDTH / 2f, FlappyWitch.SCREEN_HEIGHT / 8f);
         restartButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -59,24 +61,16 @@ public class GameOverScreen extends FlappyWitchScreen {
     }
 
     @Override
-    public void render(float delta) {
-        ScreenUtils.clear(1, 1, 1, 1);
-        game.getCamera().update();
-
-        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
-
-        //TODO: make coordinates dynamic for resizing. Perhaps using a table would be helpful.
-        game.getBatch().begin();
+    public void renderContent(float delta) {
         game.getBatch().draw(backgroundImage, 0, 0, FlappyWitch.SCREEN_WIDTH, FlappyWitch.SCREEN_HEIGHT);
-        game.getFont().draw(game.getBatch(), "SCORE", 215, 400);
-        game.getFont().draw(game.getBatch(), String.valueOf(score), 230, 380);
-        game.getFont().draw(game.getBatch(), "BEST SCORE", 220, 350);
-        game.getFont().draw(game.getBatch(), String.valueOf(game.getBestScore()), 230, 330);
-
+        game.getFont().draw(game.getBatch(), "SCORE", FlappyWitch.SCREEN_WIDTH / 2f, FlappyWitch.SCREEN_HEIGHT / 8f * 3);
+        game.getFont().draw(game.getBatch(), String.valueOf(score), FlappyWitch.SCREEN_WIDTH / 2f + 120, FlappyWitch.SCREEN_HEIGHT / 8f * 3);
+        game.getFont().draw(game.getBatch(), "BEST SCORE", FlappyWitch.SCREEN_WIDTH / 2f, FlappyWitch.SCREEN_HEIGHT / 16f * 5);
+        game.getFont().draw(game.getBatch(), String.valueOf(game.getBestScore()), FlappyWitch.SCREEN_WIDTH / 2f + 120, FlappyWitch.SCREEN_HEIGHT / 16f * 5);
         game.getBatch().end();
+
         stage.act();
         stage.draw();
-
     }
 
     @Override

@@ -1,9 +1,11 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.screen.MainMenuScreen;
 
 public class FlappyWitch extends Game {
@@ -25,6 +27,7 @@ public class FlappyWitch extends Game {
         this.batch.setProjectionMatrix(this.camera.combined);
 
         this.font = new BitmapFont();
+        this.font.setColor(1,0,1,1);
 
         this.bestScore = 0;
 

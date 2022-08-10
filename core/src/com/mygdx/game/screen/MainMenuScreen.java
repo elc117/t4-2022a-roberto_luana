@@ -14,13 +14,7 @@ public class MainMenuScreen extends FlappyWitchScreen {
     }
 
     @Override
-    public void render(float delta) {
-        ScreenUtils.clear(1, 1, 1, 1);
-        game.getCamera().update();
-
-        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
-
-        game.getBatch().begin();
+    public void renderContent(float delta) {
         game.getBatch().draw(backgroundImage, 0, 0, FlappyWitch.SCREEN_WIDTH, FlappyWitch.SCREEN_HEIGHT);
         game.getFont().draw(game.getBatch(), "Use espaço ou o botão esquerdo do mouse para começar", 100, 100);
         game.getBatch().end();

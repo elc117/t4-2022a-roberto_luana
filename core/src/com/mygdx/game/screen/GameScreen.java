@@ -1,8 +1,6 @@
 package com.mygdx.game.screen;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.FlappyWitch;
 import com.mygdx.game.element.Obstacle;
 import com.mygdx.game.element.Witch;
@@ -40,17 +38,11 @@ public class GameScreen extends FlappyWitchScreen {
     }
 
     @Override
-    public void render(float delta) {
-        ScreenUtils.clear(1, 1, 1, 1);
-        game.getCamera().update();
-
-        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
-
+    public void renderContent(float delta) {
         counter++;
         if (counter % 125 == 0)
             obstacles.add(new Obstacle());
 
-        game.getBatch().begin();
         game.getBatch().draw(backgroundImage, 0, 0, FlappyWitch.SCREEN_WIDTH, FlappyWitch.SCREEN_HEIGHT);
         obstacles.forEach(o -> {
             game.getBatch().draw(imgObstaculoCima, o.getUpperPart().x, o.getUpperPart().y, o.getUpperPart().width, o.getUpperPart().height);

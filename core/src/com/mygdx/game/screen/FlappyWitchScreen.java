@@ -1,9 +1,11 @@
 package com.mygdx.game.screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.FlappyWitch;
 
 public abstract class FlappyWitchScreen implements Screen {
@@ -20,7 +22,18 @@ public abstract class FlappyWitchScreen implements Screen {
     public abstract void show();
 
     @Override
-    public abstract void render(float delta);
+    public void render(float delta) {
+        ScreenUtils.clear(1, 1, 1, 1);
+        game.getCamera().update();
+
+        Gdx.gl.glViewport((int) viewport.x, (int) viewport.y, (int) viewport.width, (int) viewport.height);
+
+        game.getBatch().begin();
+
+        renderContent(delta);
+    }
+
+    protected abstract void renderContent(float delta);
 
     /**
      * Solução para redimensionamento encontrada em
